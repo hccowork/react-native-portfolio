@@ -1,6 +1,7 @@
 import { AdminHeader } from "@/components/admin-header";
 import { AdminActionForm } from "@/components/admin-action-form";
 import { FileInputPreview } from "@/components/file-input-preview";
+import { getCurrentAdminUser } from "@/lib/auth";
 import { getPortfolioData } from "@/lib/data";
 import { hasSupabaseEnv } from "@/lib/supabase/env";
 import {
@@ -18,6 +19,7 @@ import {
 
 export default async function AdminPage() {
   const data = await getPortfolioData();
+  const adminUser = await getCurrentAdminUser();
 
   return (
     <main className="admin-page">
@@ -40,6 +42,30 @@ export default async function AdminPage() {
           </p>
         </section>
       )}
+
+      <section className="admin-card admin-card-wide">
+        <p className="eyebrow">Update Guide</p>
+        <h2>How to keep the portfolio updated</h2>
+        {adminUser ? <p className="muted-text">Signed in as {adminUser.email}</p> : null}
+        <div className="admin-guide-grid">
+          <article className="guide-card">
+            <strong>Profile</strong>
+            <p>Update your name, title, intro, bio, avatar, resume, location, and contact email here.</p>
+          </article>
+          <article className="guide-card">
+            <strong>Projects</strong>
+            <p>Add or edit case studies, change the featured flag, and replace screenshots or links.</p>
+          </article>
+          <article className="guide-card">
+            <strong>Experience</strong>
+            <p>Keep your timeline current with companies, roles, dates, summary text, and achievements.</p>
+          </article>
+          <article className="guide-card">
+            <strong>Skills and links</strong>
+            <p>Refresh your tools, social links, and contact points so the public site stays accurate.</p>
+          </article>
+        </div>
+      </section>
 
       <section className="admin-grid">
         <article className="admin-card admin-card-wide">

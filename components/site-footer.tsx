@@ -18,7 +18,7 @@ export async function SiteFooter() {
       <div className="footer-intro">
         <p className="eyebrow">Ready for mobile-first product work</p>
         <h2>{profile.full_name}</h2>
-        <p>Explore the portfolio, review case studies, or jump into the admin area to manage the content.</p>
+        <p>Explore the portfolio, review case studies, and get a quick feel for the work and background.</p>
       </div>
       <div className="footer-clusters">
         <div className="footer-links">

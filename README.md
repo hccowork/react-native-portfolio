@@ -43,6 +43,7 @@ cp .env.example .env.local
 NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
 SUPABASE_SERVICE_ROLE_KEY=...
+ADMIN_EMAILS=your@email.com
 ```
 
 4. In Supabase SQL editor, run:
@@ -74,6 +75,7 @@ npm run dev
 
 - The public site renders demo content even before Supabase is connected.
 - Once Supabase env vars are present, the app reads from your database.
+- `ADMIN_EMAILS` controls who can see admin-only UI and enter `/admin`. Leave it empty if you want any authenticated Supabase user to count as admin.
 - Admin write actions depend on `SUPABASE_SERVICE_ROLE_KEY`, so keep it server-only.
 - The admin panel supports:
   `profile` update, avatar upload, resume upload, project create/update/delete, skill create/update/delete, experience create/update/delete, social link create/update/delete, and message archiving.

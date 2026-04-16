@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
-import { supabaseAnonKey, supabaseUrl } from "@/lib/supabase/env";
+import { isAdminEmail, supabaseAnonKey, supabaseUrl } from "@/lib/supabase/env";
 
 export async function updateSession(request: NextRequest) {
   if (!supabaseUrl || !supabaseAnonKey) {
@@ -27,16 +27,17 @@ export async function updateSession(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  const isAllowedAdmin = Boolean(user && isAdminEmail(user.email));
 
   if (request.nextUrl.pathname.startsWith("/admin/login")) {
-    if (user) {
+    if (isAllowedAdmin) {
       return NextResponse.redirect(new URL("/admin", request.url));
     }
 
     return response;
   }
 
-  if (!user) {
+  if (!isAllowedAdmin) {
     return NextResponse.redirect(new URL("/admin/login", request.url));
   }
 

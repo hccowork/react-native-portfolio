@@ -12,7 +12,7 @@ export default async function ProjectsPage() {
       <main className="inner-page">
         <div className="section-heading">
           <p className="eyebrow">All Projects</p>
-          <h1>Everything you choose to highlight from the admin dashboard can appear here.</h1>
+          <h1>A full collection of projects, case studies, and mobile product work.</h1>
         </div>
         <div className="projects-grid">
           {projects.map((project) => (

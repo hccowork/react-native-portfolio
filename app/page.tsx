@@ -94,7 +94,7 @@ export default async function HomePage() {
         <section className="content-section" id="projects">
           <div className="section-heading">
             <p className="eyebrow">Featured Work</p>
-            <h2>Mobile-first case studies with clean layouts, strong hierarchy, and an admin-manageable content model.</h2>
+            <h2>Mobile-first case studies with clean layouts, strong hierarchy, and polished storytelling.</h2>
           </div>
           <div className="projects-grid">
             {featuredProjects.map((project) => (
@@ -125,7 +125,7 @@ export default async function HomePage() {
         <section className="content-section contact-section" id="contact">
           <div className="section-heading">
             <p className="eyebrow">Contact</p>
-            <h2>Use the public form or the social links below. Messages also land in the admin panel inbox.</h2>
+            <h2>Use the form or the social links below to start a conversation about your next mobile product.</h2>
           </div>
           <div className="contact-grid">
             <article className="surface-card contact-card">

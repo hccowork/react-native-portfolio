@@ -1,8 +1,9 @@
 import type { Route } from "next";
 import Link from "next/link";
+import { getCurrentAdminUser } from "@/lib/auth";
 import { ArrowRightIcon, BriefcaseIcon, FolderIcon, MailIcon, ShieldIcon, UserIcon } from "@/components/icons";
 
-const items: Array<{
+const baseItems: Array<{
   href: Route;
   title: string;
   description: string;
@@ -27,12 +28,6 @@ const items: Array<{
     Icon: BriefcaseIcon,
   },
   {
-    href: "/admin/login",
-    title: "Admin access",
-    description: "Manage portfolio content from one place once Supabase auth is connected.",
-    Icon: ShieldIcon,
-  },
-  {
     href: "/contact",
     title: "Contact flow",
     description: "Review the public contact experience and the lead capture path for new opportunities.",
@@ -40,7 +35,22 @@ const items: Array<{
   },
 ];
 
-export function ExploreGrid() {
+export async function ExploreGrid() {
+  const adminUser = await getCurrentAdminUser();
+  const items = [
+    ...baseItems,
+    ...(adminUser
+      ? [
+          {
+            href: "/admin" as Route,
+            title: "Admin access",
+            description: "Jump into your private dashboard to update portfolio content and assets.",
+            Icon: ShieldIcon,
+          },
+        ]
+      : []),
+  ];
+
   return (
     <section className="content-section">
       <div className="section-heading">

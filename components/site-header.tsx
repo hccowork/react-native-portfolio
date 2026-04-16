@@ -1,10 +1,12 @@
 import type { Route } from "next";
 import Link from "next/link";
+import { getCurrentAdminUser } from "@/lib/auth";
 import { getPortfolioData } from "@/lib/data";
 import { BriefcaseIcon, FolderIcon, MailIcon, ShieldIcon, UserIcon } from "@/components/icons";
 
 export async function SiteHeader() {
   const { profile } = await getPortfolioData();
+  const adminUser = await getCurrentAdminUser();
 
   const navItems: Array<{ href: Route; label: string; icon: typeof UserIcon }> = [
     { href: "/#about", label: "About", icon: UserIcon },
@@ -39,10 +41,12 @@ export async function SiteHeader() {
             </Link>
           );
         })}
-        <Link href="/admin/login" className="nav-pill nav-icon-link" aria-label="Admin" title="Admin">
-          <ShieldIcon className="nav-icon" />
-          <span>Admin</span>
-        </Link>
+        {adminUser ? (
+          <Link href="/admin" className="nav-pill nav-icon-link" aria-label="Admin" title="Admin">
+            <ShieldIcon className="nav-icon" />
+            <span>Admin</span>
+          </Link>
+        ) : null}
       </nav>
     </header>
   );

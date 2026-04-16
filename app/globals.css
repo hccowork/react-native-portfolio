@@ -818,12 +818,38 @@ button {
   color: var(--muted);
 }
 
+.admin-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.guide-card {
+  padding: 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.guide-card strong,
+.guide-card p {
+  margin: 0;
+}
+
+.guide-card p {
+  margin-top: 8px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
 @media (max-width: 980px) {
   .hero-section,
   .explore-grid,
   .projects-grid,
   .about-grid,
   .contact-grid,
+  .admin-guide-grid,
   .skill-groups,
   .admin-grid,
   .admin-form {
