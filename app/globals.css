@@ -516,6 +516,10 @@ button {
   gap: 16px;
 }
 
+.inline-action-form {
+  display: inline-flex;
+}
+
 .contact-form label,
 .admin-form label,
 .auth-form label {
@@ -536,6 +540,71 @@ button {
   background: rgba(255, 255, 255, 0.04);
 }
 
+.status-toast {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  font-weight: 600;
+}
+
+.status-toast-success {
+  background: rgba(99, 230, 190, 0.12);
+  border-color: rgba(99, 230, 190, 0.25);
+  color: #cbffed;
+}
+
+.status-toast-error {
+  background: rgba(255, 140, 140, 0.12);
+  border-color: rgba(255, 140, 140, 0.3);
+  color: #ffd8d8;
+}
+
+.toast-dismiss {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0;
+}
+
+.file-input-field {
+  display: grid;
+  gap: 8px;
+}
+
+.file-preview-card {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.file-preview-card strong,
+.file-preview-card p {
+  margin: 0;
+}
+
+.file-preview-card p {
+  color: var(--muted);
+}
+
+.file-preview-image {
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -550,6 +619,12 @@ button {
 
 .button:hover {
   transform: translateY(-1px);
+}
+
+.button:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  transform: none;
 }
 
 .button-primary {

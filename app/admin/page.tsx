@@ -1,4 +1,6 @@
 import { AdminHeader } from "@/components/admin-header";
+import { AdminActionForm } from "@/components/admin-action-form";
+import { FileInputPreview } from "@/components/file-input-preview";
 import { getPortfolioData } from "@/lib/data";
 import { hasSupabaseEnv } from "@/lib/supabase/env";
 import {
@@ -43,7 +45,12 @@ export default async function AdminPage() {
         <article className="admin-card admin-card-wide">
           <p className="eyebrow">Profile</p>
           <h2>Identity, hero copy, avatar, and resume</h2>
-          <form action={upsertProfileAction} className="admin-form">
+          <AdminActionForm
+            action={upsertProfileAction}
+            className="admin-form"
+            submitLabel="Save profile"
+            pendingLabel="Saving profile..."
+          >
             <input type="hidden" name="id" value={data.profile.id} />
             <label>
               Full name
@@ -73,18 +80,24 @@ export default async function AdminPage() {
               Avatar URL
               <input name="avatar_url" defaultValue={data.profile.avatar_url} />
             </label>
-            <label>
-              Upload avatar
-              <input name="avatar_file" type="file" accept="image/*" />
-            </label>
+            <FileInputPreview
+              name="avatar_file"
+              label="Upload avatar"
+              accept="image/*"
+              kind="image"
+              currentUrl={data.profile.avatar_url}
+            />
             <label>
               Resume URL
               <input name="resume_url" defaultValue={data.profile.resume_url} />
             </label>
-            <label>
-              Upload resume
-              <input name="resume_file" type="file" accept=".pdf,.doc,.docx" />
-            </label>
+            <FileInputPreview
+              name="resume_file"
+              label="Upload resume"
+              accept=".pdf,.doc,.docx"
+              kind="file"
+              currentUrl={data.profile.resume_url}
+            />
             <label>
               Years of experience
               <input name="years_experience" type="number" defaultValue={data.profile.years_experience} />
@@ -97,16 +110,18 @@ export default async function AdminPage() {
               Companies worked
               <input name="companies_worked" type="number" defaultValue={data.profile.companies_worked} />
             </label>
-            <button type="submit" className="button button-primary">
-              Save profile
-            </button>
-          </form>
+          </AdminActionForm>
         </article>
 
         <article className="admin-card admin-card-wide">
           <p className="eyebrow">Projects</p>
           <h2>Add or update project case studies</h2>
-          <form action={upsertProjectAction} className="admin-form">
+          <AdminActionForm
+            action={upsertProjectAction}
+            className="admin-form"
+            submitLabel="Save project"
+            pendingLabel="Saving project..."
+          >
             <label>
               Title
               <input name="title" required />
@@ -143,10 +158,12 @@ export default async function AdminPage() {
               Image URL
               <input name="image_url" />
             </label>
-            <label>
-              Upload project image
-              <input name="image_file" type="file" accept="image/*" />
-            </label>
+            <FileInputPreview
+              name="image_file"
+              label="Upload project image"
+              accept="image/*"
+              kind="image"
+            />
             <label>
               Sort order
               <input name="sort_order" type="number" defaultValue={99} />
@@ -155,10 +172,7 @@ export default async function AdminPage() {
               <input name="featured" type="checkbox" />
               Featured project
             </label>
-            <button type="submit" className="button button-primary">
-              Save project
-            </button>
-          </form>
+          </AdminActionForm>
 
           <div className="entity-stack">
             {data.projects.map((project) => (
@@ -168,14 +182,22 @@ export default async function AdminPage() {
                     <strong>{project.title}</strong>
                     <p>{project.platform}</p>
                   </div>
-                  <form action={deleteProjectAction}>
+                  <AdminActionForm
+                    action={deleteProjectAction}
+                    className="inline-action-form"
+                    submitLabel="Delete"
+                    pendingLabel="Deleting..."
+                    submitClassName="button button-secondary"
+                  >
                     <input type="hidden" name="id" value={project.id} />
-                    <button type="submit" className="button button-secondary">
-                      Delete
-                    </button>
-                  </form>
+                  </AdminActionForm>
                 </div>
-                <form action={upsertProjectAction} className="admin-form">
+                <AdminActionForm
+                  action={upsertProjectAction}
+                  className="admin-form"
+                  submitLabel="Update project"
+                  pendingLabel="Updating project..."
+                >
                   <input type="hidden" name="id" value={project.id} />
                   <input type="hidden" name="slug" value={project.slug} />
                   <label>
@@ -210,10 +232,13 @@ export default async function AdminPage() {
                     Image URL
                     <input name="image_url" defaultValue={project.image_url} />
                   </label>
-                  <label>
-                    Replace image
-                    <input name="image_file" type="file" accept="image/*" />
-                  </label>
+                  <FileInputPreview
+                    name="image_file"
+                    label="Replace image"
+                    accept="image/*"
+                    kind="image"
+                    currentUrl={project.image_url}
+                  />
                   <label>
                     Sort order
                     <input name="sort_order" type="number" defaultValue={project.sort_order} />
@@ -222,10 +247,7 @@ export default async function AdminPage() {
                     <input name="featured" type="checkbox" defaultChecked={project.featured} />
                     Featured project
                   </label>
-                  <button type="submit" className="button button-primary">
-                    Update project
-                  </button>
-                </form>
+                </AdminActionForm>
               </section>
             ))}
           </div>
@@ -234,7 +256,12 @@ export default async function AdminPage() {
         <article className="admin-card">
           <p className="eyebrow">Skills</p>
           <h2>Manage skill groups</h2>
-          <form action={upsertSkillAction} className="admin-form">
+          <AdminActionForm
+            action={upsertSkillAction}
+            className="admin-form"
+            submitLabel="Save skill"
+            pendingLabel="Saving skill..."
+          >
             <label>
               Skill name
               <input name="name" required />
@@ -247,10 +274,7 @@ export default async function AdminPage() {
               Sort order
               <input name="sort_order" type="number" defaultValue={99} />
             </label>
-            <button type="submit" className="button button-primary">
-              Save skill
-            </button>
-          </form>
+          </AdminActionForm>
           <div className="entity-stack compact-stack">
             {data.skills.map((skill) => (
               <section key={skill.id} className="entity-card">
@@ -259,14 +283,22 @@ export default async function AdminPage() {
                     <strong>{skill.name}</strong>
                     <p>{skill.category}</p>
                   </div>
-                  <form action={deleteSkillAction}>
+                  <AdminActionForm
+                    action={deleteSkillAction}
+                    className="inline-action-form"
+                    submitLabel="Delete"
+                    pendingLabel="Deleting..."
+                    submitClassName="button button-secondary"
+                  >
                     <input type="hidden" name="id" value={skill.id} />
-                    <button type="submit" className="button button-secondary">
-                      Delete
-                    </button>
-                  </form>
+                  </AdminActionForm>
                 </div>
-                <form action={upsertSkillAction} className="admin-form">
+                <AdminActionForm
+                  action={upsertSkillAction}
+                  className="admin-form"
+                  submitLabel="Update skill"
+                  pendingLabel="Updating skill..."
+                >
                   <input type="hidden" name="id" value={skill.id} />
                   <label>
                     Skill name
@@ -280,10 +312,7 @@ export default async function AdminPage() {
                     Sort order
                     <input name="sort_order" type="number" defaultValue={skill.sort_order} />
                   </label>
-                  <button type="submit" className="button button-primary">
-                    Update skill
-                  </button>
-                </form>
+                </AdminActionForm>
               </section>
             ))}
           </div>
@@ -292,7 +321,12 @@ export default async function AdminPage() {
         <article className="admin-card">
           <p className="eyebrow">Experience</p>
           <h2>Manage timeline entries</h2>
-          <form action={upsertExperienceAction} className="admin-form">
+          <AdminActionForm
+            action={upsertExperienceAction}
+            className="admin-form"
+            submitLabel="Save experience"
+            pendingLabel="Saving experience..."
+          >
             <label>
               Company
               <input name="company" required />
@@ -321,10 +355,7 @@ export default async function AdminPage() {
               Sort order
               <input name="sort_order" type="number" defaultValue={99} />
             </label>
-            <button type="submit" className="button button-primary">
-              Save experience
-            </button>
-          </form>
+          </AdminActionForm>
           <div className="entity-stack compact-stack">
             {data.experiences.map((item) => (
               <section key={item.id} className="entity-card">
@@ -335,14 +366,22 @@ export default async function AdminPage() {
                       {item.company} · {item.start_label} - {item.end_label}
                     </p>
                   </div>
-                  <form action={deleteExperienceAction}>
+                  <AdminActionForm
+                    action={deleteExperienceAction}
+                    className="inline-action-form"
+                    submitLabel="Delete"
+                    pendingLabel="Deleting..."
+                    submitClassName="button button-secondary"
+                  >
                     <input type="hidden" name="id" value={item.id} />
-                    <button type="submit" className="button button-secondary">
-                      Delete
-                    </button>
-                  </form>
+                  </AdminActionForm>
                 </div>
-                <form action={upsertExperienceAction} className="admin-form">
+                <AdminActionForm
+                  action={upsertExperienceAction}
+                  className="admin-form"
+                  submitLabel="Update experience"
+                  pendingLabel="Updating experience..."
+                >
                   <input type="hidden" name="id" value={item.id} />
                   <label>
                     Company
@@ -372,10 +411,7 @@ export default async function AdminPage() {
                     Sort order
                     <input name="sort_order" type="number" defaultValue={item.sort_order} />
                   </label>
-                  <button type="submit" className="button button-primary">
-                    Update experience
-                  </button>
-                </form>
+                </AdminActionForm>
               </section>
             ))}
           </div>
@@ -384,7 +420,12 @@ export default async function AdminPage() {
         <article className="admin-card admin-card-wide">
           <p className="eyebrow">Social Links</p>
           <h2>Manage footer and contact links</h2>
-          <form action={upsertSocialLinkAction} className="admin-form">
+          <AdminActionForm
+            action={upsertSocialLinkAction}
+            className="admin-form"
+            submitLabel="Save link"
+            pendingLabel="Saving link..."
+          >
             <label>
               Label
               <input name="label" placeholder="GitHub" required />
@@ -397,10 +438,7 @@ export default async function AdminPage() {
               Sort order
               <input name="sort_order" type="number" defaultValue={99} />
             </label>
-            <button type="submit" className="button button-primary">
-              Save link
-            </button>
-          </form>
+          </AdminActionForm>
           <div className="entity-stack compact-stack">
             {data.socialLinks.map((link) => (
               <section key={link.id} className="entity-card">
@@ -409,14 +447,22 @@ export default async function AdminPage() {
                     <strong>{link.label}</strong>
                     <p>{link.href}</p>
                   </div>
-                  <form action={deleteSocialLinkAction}>
+                  <AdminActionForm
+                    action={deleteSocialLinkAction}
+                    className="inline-action-form"
+                    submitLabel="Delete"
+                    pendingLabel="Deleting..."
+                    submitClassName="button button-secondary"
+                  >
                     <input type="hidden" name="id" value={link.id} />
-                    <button type="submit" className="button button-secondary">
-                      Delete
-                    </button>
-                  </form>
+                  </AdminActionForm>
                 </div>
-                <form action={upsertSocialLinkAction} className="admin-form">
+                <AdminActionForm
+                  action={upsertSocialLinkAction}
+                  className="admin-form"
+                  submitLabel="Update link"
+                  pendingLabel="Updating link..."
+                >
                   <input type="hidden" name="id" value={link.id} />
                   <label>
                     Label
@@ -430,10 +476,7 @@ export default async function AdminPage() {
                     Sort order
                     <input name="sort_order" type="number" defaultValue={link.sort_order} />
                   </label>
-                  <button type="submit" className="button button-primary">
-                    Update link
-                  </button>
-                </form>
+                </AdminActionForm>
               </section>
             ))}
           </div>
@@ -454,12 +497,15 @@ export default async function AdminPage() {
                   <p>{message.email}</p>
                 </div>
                 <p>{message.message}</p>
-                <form action={deleteMessageAction}>
+                <AdminActionForm
+                  action={deleteMessageAction}
+                  className="inline-action-form"
+                  submitLabel="Archive"
+                  pendingLabel="Archiving..."
+                  submitClassName="button button-secondary"
+                >
                   <input type="hidden" name="id" value={message.id} />
-                  <button type="submit" className="button button-secondary">
-                    Archive
-                  </button>
-                </form>
+                </AdminActionForm>
               </article>
             ))}
           </div>

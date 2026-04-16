@@ -61,6 +61,12 @@ export type ContactMessage = {
   created_at: string;
 };
 
+export type AdminActionState = {
+  status: "idle" | "success" | "error";
+  message: string;
+  submittedAt: number;
+};
+
 export type PortfolioData = {
   profile: Profile;
   projects: Project[];
