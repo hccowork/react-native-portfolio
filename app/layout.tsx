@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
+import { getPortfolioData } from "@/lib/data";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Prem Mehta | React Native Developer",
-  description:
-    "React Native developer portfolio built with Next.js, Supabase, admin editing, and Vercel deployment in mind.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { profile } = await getPortfolioData();
+
+  return {
+    title: `${profile.full_name} | ${profile.title}`,
+    description: profile.intro,
+  };
+}
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
