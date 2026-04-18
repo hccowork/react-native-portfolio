@@ -67,6 +67,8 @@ export type AdminActionState = {
   submittedAt: number;
 };
 
+export type FormActionState = AdminActionState;
+
 export type PortfolioData = {
   profile: Profile;
   projects: Project[];

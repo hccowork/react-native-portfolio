@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import type { AdminActionState } from "@/lib/types";
+import { FormStatusToast } from "@/components/form-status-toast";
 
 const initialState: AdminActionState = {
   status: "idle",
@@ -43,23 +44,7 @@ export function AdminActionForm({
 
   return (
     <form action={formAction} className={className}>
-      {visibleState.status !== "idle" ? (
-        <div
-          className={`status-toast ${
-            visibleState.status === "success" ? "status-toast-success" : "status-toast-error"
-          }`}
-        >
-          <span>{visibleState.message}</span>
-          <button
-            type="button"
-            className="toast-dismiss"
-            onClick={() => setVisibleState(initialState)}
-            aria-label="Dismiss message"
-          >
-            ×
-          </button>
-        </div>
-      ) : null}
+      <FormStatusToast state={visibleState} onDismiss={() => setVisibleState(initialState)} />
       {children}
       <button type="submit" className={submitClassName} disabled={isPending}>
         {isPending ? pendingLabel ?? `${submitLabel}...` : submitLabel}
