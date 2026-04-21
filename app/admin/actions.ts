@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { adminLoginPath } from "@/lib/admin-route";
 import { createAdminSupabaseClient, createServerSupabaseClient } from "@/lib/supabase/server";
 import type { AdminActionState } from "@/lib/types";
 import { slugify, splitCsv } from "@/lib/utils";
@@ -81,7 +82,7 @@ export async function loginAction(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    redirect("/admin/login?error=invalid-credentials");
+    redirect(`${adminLoginPath}?error=invalid-credentials` as any);
   }
 
   redirect("/admin");
