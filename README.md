@@ -44,6 +44,7 @@ NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
 SUPABASE_SERVICE_ROLE_KEY=...
 ADMIN_EMAILS=your@email.com
+ADMIN_LOGIN_PATH=/hc-admin-9x7k-secure-entry
 ```
 
 4. In Supabase SQL editor, run:
@@ -76,6 +77,7 @@ npm run dev
 - The public site renders demo content even before Supabase is connected.
 - Once Supabase env vars are present, the app reads from your database.
 - `ADMIN_EMAILS` controls who can see admin-only UI and enter `/admin`. Leave it empty if you want any authenticated Supabase user to count as admin.
+- `ADMIN_LOGIN_PATH` controls the secret login entry path. Use a hard-to-guess route and keep `/admin/login` hidden from visitors. Do not set it to `/admin` or `/admin/login`.
 - Admin write actions depend on `SUPABASE_SERVICE_ROLE_KEY`, so keep it server-only.
 - The admin panel supports:
   `profile` update, avatar upload, resume upload, project create/update/delete, skill create/update/delete, experience create/update/delete, social link create/update/delete, and message archiving.

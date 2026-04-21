@@ -1,5 +1,5 @@
-const DEFAULT_ADMIN_LOGIN_PATH = "/secure-admin-entry";
-export const INTERNAL_ADMIN_LOGIN_PATH = "/internal-admin-auth-gateway";
+const DEFAULT_ADMIN_LOGIN_PATH = "/hc-admin-9x7k-secure-entry";
+const INSECURE_ADMIN_LOGIN_PATHS = new Set(["/admin", "/admin/login"]);
 
 function normalizePathname(value?: string | null) {
   const trimmedValue = value?.trim();
@@ -12,18 +12,14 @@ function normalizePathname(value?: string | null) {
   const withoutTrailingSlash =
     withLeadingSlash.length > 1 ? withLeadingSlash.replace(/\/+$/, "") : withLeadingSlash;
 
-  if (
-    withoutTrailingSlash.startsWith("/admin") ||
-    withoutTrailingSlash.startsWith("/_next") ||
-    withoutTrailingSlash === INTERNAL_ADMIN_LOGIN_PATH
-  ) {
-    return DEFAULT_ADMIN_LOGIN_PATH;
-  }
-
   return withoutTrailingSlash;
 }
 
-export const adminLoginPath = normalizePathname(process.env.ADMIN_LOGIN_PATH);
+const configuredAdminLoginPath = normalizePathname(process.env.ADMIN_LOGIN_PATH);
+
+export const adminLoginPath = INSECURE_ADMIN_LOGIN_PATHS.has(configuredAdminLoginPath)
+  ? DEFAULT_ADMIN_LOGIN_PATH
+  : configuredAdminLoginPath;
 
 export function isAdminLoginPath(pathname: string) {
   return normalizePathname(pathname) === adminLoginPath;
