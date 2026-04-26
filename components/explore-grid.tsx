@@ -1,5 +1,6 @@
 import type { Route } from "next";
 import Link from "next/link";
+import { Reveal } from "@/components/reveal";
 import { getCurrentAdminUser } from "@/lib/auth";
 import { ArrowRightIcon, BriefcaseIcon, FolderIcon, MailIcon, ShieldIcon, UserIcon } from "@/components/icons";
 
@@ -52,25 +53,27 @@ export async function ExploreGrid() {
   ];
 
   return (
-    <section className="content-section">
+    <Reveal as="section" className="content-section">
       <div className="section-heading">
         <p className="eyebrow">Explore</p>
         <h2>Everything important is one click away.</h2>
       </div>
       <div className="explore-grid">
-        {items.map(({ href, title, description, Icon }) => (
-          <Link key={href} href={href} className="explore-card">
-            <div className="explore-icon-shell">
-              <Icon className="explore-icon" />
-            </div>
-            <div>
-              <h3>{title}</h3>
-              <p>{description}</p>
-            </div>
-            <ArrowRightIcon className="explore-arrow" />
-          </Link>
+        {items.map(({ href, title, description, Icon }, index) => (
+          <Reveal key={href} as="div" delay={index * 80}>
+            <Link href={href} className="explore-card">
+              <div className="explore-icon-shell">
+                <Icon className="explore-icon" />
+              </div>
+              <div>
+                <h3>{title}</h3>
+                <p>{description}</p>
+              </div>
+              <ArrowRightIcon className="explore-arrow" />
+            </Link>
+          </Reveal>
         ))}
       </div>
-    </section>
+    </Reveal>
   );
 }

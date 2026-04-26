@@ -1,4 +1,5 @@
 import { ProjectCard } from "@/components/project-card";
+import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getPortfolioData } from "@/lib/data";
@@ -10,10 +11,10 @@ export default async function ProjectsPage() {
     <div className="page-shell">
       <SiteHeader />
       <main className="inner-page">
-        <div className="section-heading">
+        <Reveal as="div" className="section-heading">
           <p className="eyebrow">All Projects</p>
           <h1>A full collection of projects, case studies, and mobile product work.</h1>
-        </div>
+        </Reveal>
         <div className="projects-grid">
           {projects.map((project) => (
             <ProjectCard key={project.id} project={project} />
