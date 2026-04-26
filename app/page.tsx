@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { ContactForm } from "@/components/contact-form";
+import { AnimatedNumber } from "@/components/animated-number";
 import { ExperienceList } from "@/components/experience-list";
 import { ExploreGrid } from "@/components/explore-grid";
 import { ProjectCard } from "@/components/project-card";
+import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SkillGroups } from "@/components/skill-groups";
@@ -19,7 +21,7 @@ export default async function HomePage() {
 
       <main>
         <section className="hero-section">
-          <div className="hero-copy">
+          <Reveal as="div" className="hero-copy" delay={40}>
             <p className="eyebrow">React Native Portfolio</p>
             <h1>{data.profile.title} building premium mobile products with clean frontend systems.</h1>
             <p className="hero-text">{data.profile.intro}</p>
@@ -31,9 +33,9 @@ export default async function HomePage() {
                 View resume
               </a>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="hero-panel">
+          <Reveal as="div" className="hero-panel" delay={180}>
             <div className="hero-panel-top">
               <div>
                 <p className="panel-label">Highlights</p>
@@ -46,15 +48,21 @@ export default async function HomePage() {
             </div>
             <div className="stats-grid">
               <article>
-                <strong>{data.profile.years_experience}+</strong>
+                <strong>
+                  <AnimatedNumber value={data.profile.years_experience} suffix="+" />
+                </strong>
                 <span>Years shipping apps</span>
               </article>
               <article>
-                <strong>{data.profile.projects_shipped}+</strong>
+                <strong>
+                  <AnimatedNumber value={data.profile.projects_shipped} suffix="+" />
+                </strong>
                 <span>Projects delivered</span>
               </article>
               <article>
-                <strong>{data.profile.companies_worked}+</strong>
+                <strong>
+                  <AnimatedNumber value={data.profile.companies_worked} suffix="+" />
+                </strong>
                 <span>Teams supported</span>
               </article>
             </div>
@@ -62,10 +70,10 @@ export default async function HomePage() {
               <p>Cross-platform delivery</p>
               <span>React Native, Expo, TypeScript, APIs, performance, release confidence</span>
             </div>
-          </div>
+          </Reveal>
         </section>
 
-        <section className="content-section" id="about">
+        <Reveal as="section" className="content-section" id="about">
           <div className="section-heading">
             <p className="eyebrow">About</p>
             <h2>Built for the same kind of polished portfolio feel you referenced, but tailored to mobile product work.</h2>
@@ -87,11 +95,11 @@ export default async function HomePage() {
               </p>
             </article>
           </div>
-        </section>
+        </Reveal>
 
         <ExploreGrid />
 
-        <section className="content-section" id="projects">
+        <Reveal as="section" className="content-section" id="projects">
           <div className="section-heading">
             <p className="eyebrow">Featured Work</p>
             <h2>Mobile-first case studies with clean layouts, strong hierarchy, and polished storytelling.</h2>
@@ -104,25 +112,25 @@ export default async function HomePage() {
           <Link href="/projects" className="text-link">
             View all projects
           </Link>
-        </section>
+        </Reveal>
 
-        <section className="content-section" id="experience">
+        <Reveal as="section" className="content-section" id="experience">
           <div className="section-heading">
             <p className="eyebrow">Experience</p>
             <h2>Delivery across mobile products, UI systems, and real-world release workflows.</h2>
           </div>
           <ExperienceList items={data.experiences} />
-        </section>
+        </Reveal>
 
-        <section className="content-section">
+        <Reveal as="section" className="content-section">
           <div className="section-heading">
             <p className="eyebrow">Skills</p>
             <h2>Your tech stack is grouped so recruiters and clients can scan it quickly.</h2>
           </div>
           <SkillGroups groups={skillGroups} />
-        </section>
+        </Reveal>
 
-        <section className="content-section contact-section" id="contact">
+        <Reveal as="section" className="content-section contact-section" id="contact">
           <div className="section-heading">
             <p className="eyebrow">Contact</p>
             <h2>Use the form or the social links below to start a conversation about your next mobile product.</h2>
@@ -141,7 +149,7 @@ export default async function HomePage() {
               <ContactForm />
             </article>
           </div>
-        </section>
+        </Reveal>
       </main>
 
       <SiteFooter />

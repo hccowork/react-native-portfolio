@@ -1,4 +1,5 @@
 import { ContactForm } from "@/components/contact-form";
+import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getPortfolioData } from "@/lib/data";
@@ -10,10 +11,10 @@ export default async function ContactPage() {
     <div className="page-shell">
       <SiteHeader />
       <main className="inner-page">
-        <div className="section-heading">
+        <Reveal as="div" className="section-heading">
           <p className="eyebrow">Contact</p>
           <h1>Let’s build an excellent mobile experience together.</h1>
-        </div>
+        </Reveal>
         <div className="contact-grid">
           <article className="surface-card contact-card">
             <h2>Reach out directly</h2>

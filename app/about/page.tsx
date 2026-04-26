@@ -1,4 +1,5 @@
 import { ExperienceList } from "@/components/experience-list";
+import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SkillGroups } from "@/components/skill-groups";
@@ -12,13 +13,13 @@ export default async function AboutPage() {
     <div className="page-shell">
       <SiteHeader />
       <main className="inner-page">
-        <div className="section-heading">
+        <Reveal as="div" className="section-heading">
           <p className="eyebrow">About Me</p>
           <h1>{data.profile.title}</h1>
           <p>{data.profile.long_bio}</p>
-        </div>
+        </Reveal>
         {data.profile.avatar_url ? (
-          <section className="content-section">
+          <Reveal as="section" className="content-section">
             <article className="surface-card profile-showcase">
               <img src={data.profile.avatar_url} alt={data.profile.full_name} className="profile-avatar profile-avatar-large" />
               <div>
@@ -27,22 +28,22 @@ export default async function AboutPage() {
                 <p>{data.profile.location}</p>
               </div>
             </article>
-          </section>
+          </Reveal>
         ) : null}
-        <section className="content-section">
+        <Reveal as="section" className="content-section">
           <div className="section-heading">
             <p className="eyebrow">Career Journey</p>
             <h2>Timeline</h2>
           </div>
           <ExperienceList items={data.experiences} />
-        </section>
-        <section className="content-section">
+        </Reveal>
+        <Reveal as="section" className="content-section">
           <div className="section-heading">
             <p className="eyebrow">Tech Stack</p>
             <h2>Skills</h2>
           </div>
           <SkillGroups groups={skillGroups} />
-        </section>
+        </Reveal>
       </main>
       <SiteFooter />
     </div>

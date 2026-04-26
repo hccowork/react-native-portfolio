@@ -1,4 +1,5 @@
 import type { Experience } from "@/lib/types";
+import { Reveal } from "@/components/reveal";
 
 type ExperienceListProps = {
   items: Experience[];
@@ -7,8 +8,8 @@ type ExperienceListProps = {
 export function ExperienceList({ items }: ExperienceListProps) {
   return (
     <div className="timeline">
-      {items.map((item) => (
-        <article key={item.id} className="timeline-item">
+      {items.map((item, index) => (
+        <Reveal key={item.id} as="article" className="timeline-item" delay={index * 90}>
           <div className="timeline-period">
             <span>{item.start_label}</span>
             <span>{item.end_label}</span>
@@ -23,7 +24,7 @@ export function ExperienceList({ items }: ExperienceListProps) {
               ))}
             </ul>
           </div>
-        </article>
+        </Reveal>
       ))}
     </div>
   );

@@ -1,4 +1,5 @@
 import type { Project } from "@/lib/types";
+import { Reveal } from "@/components/reveal";
 
 type ProjectCardProps = {
   project: Project;
@@ -6,7 +7,7 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <article className="project-card">
+    <Reveal as="article" className="project-card" delay={80}>
       <div
         className="project-surface"
         style={
@@ -41,6 +42,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </a>
         </div>
       </div>
-    </article>
+    </Reveal>
   );
 }
