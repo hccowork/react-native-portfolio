@@ -34,7 +34,8 @@ export function AdminActionForm({
   submitClassName = "button button-primary",
 }: AdminActionFormProps) {
   const [state, formAction, isPending] = useActionState(action, initialState);
-  const [visibleState, setVisibleState] = useState<AdminActionState>(initialState);
+  const [visibleState, setVisibleState] =
+    useState<AdminActionState>(initialState);
 
   useEffect(() => {
     if (state.status !== "idle") {
@@ -43,11 +44,18 @@ export function AdminActionForm({
   }, [state]);
 
   return (
-    <form action={formAction} className={className}>
-      <FormStatusToast state={visibleState} onDismiss={() => setVisibleState(initialState)} />
+    <form
+      action={formAction}
+      className={className}
+      encType="multipart/form-data"
+    >
+      <FormStatusToast
+        state={visibleState}
+        onDismiss={() => setVisibleState(initialState)}
+      />
       {children}
       <button type="submit" className={submitClassName} disabled={isPending}>
-        {isPending ? pendingLabel ?? `${submitLabel}...` : submitLabel}
+        {isPending ? (pendingLabel ?? `${submitLabel}...`) : submitLabel}
       </button>
     </form>
   );

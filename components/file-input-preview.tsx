@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { isValidResumeUrl } from "@/lib/resume";
 
 type FileInputPreviewProps = {
   accept: string;
@@ -48,19 +49,38 @@ export function FileInputPreview({
         {selectedFile ? (
           <>
             <strong>{selectedFile.name}</strong>
-            <p>{Math.max(1, Math.round(selectedFile.size / 1024))} KB selected</p>
+            <p>
+              {Math.max(1, Math.round(selectedFile.size / 1024))} KB selected
+            </p>
             {kind === "image" && previewUrl ? (
-              <img src={previewUrl} alt={selectedFile.name} className="file-preview-image" />
+              <img
+                src={previewUrl}
+                alt={selectedFile.name}
+                className="file-preview-image"
+              />
             ) : null}
           </>
-        ) : currentUrl ? (
+        ) : currentUrl && (kind === "image" || isValidResumeUrl(currentUrl)) ? (
           <>
             <strong>Current asset</strong>
-            <p>{kind === "image" ? "Previewing the uploaded image." : "Existing file is linked below."}</p>
+            <p>
+              {kind === "image"
+                ? "Previewing the uploaded image."
+                : "Existing file is linked below."}
+            </p>
             {kind === "image" ? (
-              <img src={currentUrl} alt="Current asset" className="file-preview-image" />
+              <img
+                src={currentUrl}
+                alt="Current asset"
+                className="file-preview-image"
+              />
             ) : (
-              <a href={currentUrl} target="_blank" rel="noreferrer" className="text-link">
+              <a
+                href={currentUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="text-link"
+              >
                 Open current file
               </a>
             )}
@@ -68,7 +88,11 @@ export function FileInputPreview({
         ) : (
           <>
             <strong>No file selected</strong>
-            <p>Choose a file to upload from the admin panel.</p>
+            <p>
+              {kind === "file" && currentUrl
+                ? "The saved resume link is invalid. Upload a file or add a valid URL."
+                : "Choose a file to upload from the admin panel."}
+            </p>
           </>
         )}
       </div>

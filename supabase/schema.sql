@@ -134,7 +134,7 @@ values (
   'I''m a React Native developer focused on fast, reliable mobile apps with clean UI systems, scalable state management, and strong collaboration with backend and product teams.',
   'India',
   'prem@example.com',
-  '#',
+  '',
   '',
   3,
   12,

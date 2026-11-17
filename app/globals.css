@@ -676,6 +676,11 @@ button {
   transform: none;
 }
 
+.button-disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+}
+
 .button-primary {
   background: linear-gradient(135deg, var(--accent), #93f5d8);
   color: #04111d;

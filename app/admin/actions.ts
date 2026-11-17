@@ -3,8 +3,12 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { adminLoginPath } from "@/lib/admin-route";
-import { createAdminSupabaseClient, createServerSupabaseClient } from "@/lib/supabase/server";
+import {
+  createAdminSupabaseClient,
+  createServerSupabaseClient,
+} from "@/lib/supabase/server";
 import type { AdminActionState } from "@/lib/types";
+import { isValidResumeUrl } from "@/lib/resume";
 import { slugify, splitCsv } from "@/lib/utils";
 
 const ASSET_BUCKET = "portfolio-assets";
@@ -55,10 +59,12 @@ async function uploadPublicFile(bucket: string, folder: string, file: File) {
   const path = `${folder}/${Date.now()}-${safeName}${extension ? `.${extension}` : ""}`;
 
   const arrayBuffer = await file.arrayBuffer();
-  const { error } = await client.storage.from(bucket).upload(path, arrayBuffer, {
-    contentType: file.type || "application/octet-stream",
-    upsert: true,
-  });
+  const { error } = await client.storage
+    .from(bucket)
+    .upload(path, arrayBuffer, {
+      contentType: file.type || "application/octet-stream",
+      upsert: true,
+    });
 
   if (error) {
     console.error(`Failed to upload to ${bucket}`, error);
@@ -101,16 +107,25 @@ export async function upsertProfileAction(
   try {
     const avatarFile = formData.get("avatar_file");
     const resumeFile = formData.get("resume_file");
+    const hasNewResumeFile = resumeFile instanceof File && resumeFile.size > 0;
+    const manualResumeUrl = getString(formData, "resume_url");
+
+    if (
+      !hasNewResumeFile &&
+      manualResumeUrl &&
+      !isValidResumeUrl(manualResumeUrl)
+    ) {
+      return failure("Add a valid http(s) resume URL or upload a resume file.");
+    }
 
     const avatarUrl =
       avatarFile instanceof File && avatarFile.size > 0
         ? await uploadPublicFile(ASSET_BUCKET, "avatars", avatarFile)
         : getString(formData, "avatar_url");
 
-    const resumeUrl =
-      resumeFile instanceof File && resumeFile.size > 0
-        ? await uploadPublicFile(RESUME_BUCKET, "resumes", resumeFile)
-        : getString(formData, "resume_url");
+    const resumeUrl = hasNewResumeFile
+      ? await uploadPublicFile(RESUME_BUCKET, "resumes", resumeFile)
+      : manualResumeUrl;
 
     const payload = {
       id: getString(formData, "id") || "profile-1",
@@ -134,9 +149,15 @@ export async function upsertProfileAction(
     }
 
     revalidatePortfolio();
-    return success("Profile updated successfully.");
+    return success(
+      hasNewResumeFile
+        ? "Profile and resume uploaded successfully."
+        : "Profile updated successfully.",
+    );
   } catch (error) {
-    return failure(error instanceof Error ? error.message : "Failed to update profile.");
+    return failure(
+      error instanceof Error ? error.message : "Failed to update profile.",
+    );
   }
 }
 
@@ -180,9 +201,15 @@ export async function upsertProjectAction(
     }
 
     revalidatePortfolio();
-    return success(payload.id ? "Project updated successfully." : "Project created successfully.");
+    return success(
+      payload.id
+        ? "Project updated successfully."
+        : "Project created successfully.",
+    );
   } catch (error) {
-    return failure(error instanceof Error ? error.message : "Failed to save project.");
+    return failure(
+      error instanceof Error ? error.message : "Failed to save project.",
+    );
   }
 }
 
@@ -196,7 +223,10 @@ export async function deleteProjectAction(
     return failure("Supabase is not configured yet.");
   }
 
-  const { error } = await client.from("projects").delete().eq("id", getString(formData, "id"));
+  const { error } = await client
+    .from("projects")
+    .delete()
+    .eq("id", getString(formData, "id"));
 
   if (error) {
     return failure(error.message);
@@ -230,7 +260,9 @@ export async function upsertSkillAction(
   }
 
   revalidatePortfolio();
-  return success(payload.id ? "Skill updated successfully." : "Skill created successfully.");
+  return success(
+    payload.id ? "Skill updated successfully." : "Skill created successfully.",
+  );
 }
 
 export async function deleteSkillAction(
@@ -243,7 +275,10 @@ export async function deleteSkillAction(
     return failure("Supabase is not configured yet.");
   }
 
-  const { error } = await client.from("skills").delete().eq("id", getString(formData, "id"));
+  const { error } = await client
+    .from("skills")
+    .delete()
+    .eq("id", getString(formData, "id"));
 
   if (error) {
     return failure(error.message);
@@ -281,7 +316,11 @@ export async function upsertExperienceAction(
   }
 
   revalidatePortfolio();
-  return success(payload.id ? "Experience updated successfully." : "Experience created successfully.");
+  return success(
+    payload.id
+      ? "Experience updated successfully."
+      : "Experience created successfully.",
+  );
 }
 
 export async function deleteExperienceAction(
@@ -294,7 +333,10 @@ export async function deleteExperienceAction(
     return failure("Supabase is not configured yet.");
   }
 
-  const { error } = await client.from("experiences").delete().eq("id", getString(formData, "id"));
+  const { error } = await client
+    .from("experiences")
+    .delete()
+    .eq("id", getString(formData, "id"));
 
   if (error) {
     return failure(error.message);
@@ -328,7 +370,11 @@ export async function upsertSocialLinkAction(
   }
 
   revalidatePortfolio();
-  return success(payload.id ? "Social link updated successfully." : "Social link created successfully.");
+  return success(
+    payload.id
+      ? "Social link updated successfully."
+      : "Social link created successfully.",
+  );
 }
 
 export async function deleteSocialLinkAction(
@@ -341,7 +387,10 @@ export async function deleteSocialLinkAction(
     return failure("Supabase is not configured yet.");
   }
 
-  const { error } = await client.from("social_links").delete().eq("id", getString(formData, "id"));
+  const { error } = await client
+    .from("social_links")
+    .delete()
+    .eq("id", getString(formData, "id"));
 
   if (error) {
     return failure(error.message);
@@ -361,7 +410,10 @@ export async function deleteMessageAction(
     return failure("Supabase is not configured yet.");
   }
 
-  const { error } = await client.from("messages").delete().eq("id", getString(formData, "id"));
+  const { error } = await client
+    .from("messages")
+    .delete()
+    .eq("id", getString(formData, "id"));
 
   if (error) {
     return failure(error.message);

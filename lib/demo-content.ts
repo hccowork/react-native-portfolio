@@ -1,4 +1,11 @@
-import type { Experience, PortfolioData, Profile, Project, Skill, SocialLink } from "@/lib/types";
+import type {
+  Experience,
+  PortfolioData,
+  Profile,
+  Project,
+  Skill,
+  SocialLink,
+} from "@/lib/types";
 
 export const demoProfile: Profile = {
   id: "profile-1",
@@ -10,7 +17,7 @@ export const demoProfile: Profile = {
     "I'm a React Native developer focused on fast, reliable mobile apps with clean UI systems, scalable state management, and strong collaboration with backend and product teams. This starter portfolio is designed for a developer who wants a modern public site and an easy editing workflow for projects, experience, and skills without touching code every time.",
   location: "India",
   email: "prem@example.com",
-  resume_url: "#",
+  resume_url: "",
   avatar_url: "",
   years_experience: 3,
   projects_shipped: 12,
@@ -22,7 +29,8 @@ export const demoProjects: Project[] = [
     id: "project-1",
     title: "Fintech Wallet App",
     slug: "fintech-wallet-app",
-    summary: "A secure mobile wallet with onboarding, transfers, and transaction insights.",
+    summary:
+      "A secure mobile wallet with onboarding, transfers, and transaction insights.",
     description:
       "Built a React Native wallet app with biometric authentication, real-time transaction updates, and modular UI components for rapid feature delivery.",
     tech_stack: ["React Native", "TypeScript", "Redux Toolkit", "Supabase"],
@@ -37,7 +45,8 @@ export const demoProjects: Project[] = [
     id: "project-2",
     title: "Healthcare Booking App",
     slug: "healthcare-booking-app",
-    summary: "Appointment booking with doctor search, reminders, and secure profile flows.",
+    summary:
+      "Appointment booking with doctor search, reminders, and secure profile flows.",
     description:
       "Created reusable booking flows, push notification hooks, and offline-friendly appointment states for a healthcare platform.",
     tech_stack: ["React Native", "Expo", "Firebase", "REST API"],
@@ -52,7 +61,8 @@ export const demoProjects: Project[] = [
     id: "project-3",
     title: "Logistics Driver App",
     slug: "logistics-driver-app",
-    summary: "Delivery workflow app with route status updates and proof-of-delivery uploads.",
+    summary:
+      "Delivery workflow app with route status updates and proof-of-delivery uploads.",
     description:
       "Implemented role-based navigation, live order states, image uploads, and performance optimizations for large delivery lists.",
     tech_stack: ["React Native", "TypeScript", "React Query", "Maps"],
@@ -112,9 +122,24 @@ export const demoSkills: Skill[] = [
 ];
 
 export const demoSocialLinks: SocialLink[] = [
-  { id: "social-1", label: "GitHub", href: "https://github.com/", sort_order: 1 },
-  { id: "social-2", label: "LinkedIn", href: "https://www.linkedin.com/", sort_order: 2 },
-  { id: "social-3", label: "Email", href: "mailto:prem@example.com", sort_order: 3 },
+  {
+    id: "social-1",
+    label: "GitHub",
+    href: "https://github.com/",
+    sort_order: 1,
+  },
+  {
+    id: "social-2",
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/",
+    sort_order: 2,
+  },
+  {
+    id: "social-3",
+    label: "Email",
+    href: "mailto:prem@example.com",
+    sort_order: 3,
+  },
 ];
 
 export const demoPortfolioData: PortfolioData = {
