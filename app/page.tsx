@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ContactForm } from "@/components/contact-form";
 import { AnimatedNumber } from "@/components/animated-number";
+import { ArrowRightIcon } from "@/components/icons";
 import { ExperienceList } from "@/components/experience-list";
 import { ExploreGrid } from "@/components/explore-grid";
 import { ProjectCard } from "@/components/project-card";
@@ -129,21 +130,28 @@ export default async function HomePage() {
         <ExploreGrid />
 
         <Reveal as="section" className="content-section" id="projects">
-          <div className="section-heading">
-            <p className="eyebrow">Featured Work</p>
-            <h2>
-              Mobile-first case studies with clean layouts, strong hierarchy,
-              and polished storytelling.
-            </h2>
+          <div className="featured-work-heading">
+            <div className="section-heading">
+              <p className="eyebrow">Featured Work</p>
+              <h2>
+                Mobile-first case studies with clean layouts, strong hierarchy,
+                and polished storytelling.
+              </h2>
+            </div>
+            <Link
+              href="/projects"
+              className="view-all-projects-link"
+              aria-label="View all projects"
+            >
+              <ArrowRightIcon />
+              <span role="tooltip">View all projects</span>
+            </Link>
           </div>
           <div className="projects-grid">
             {featuredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>
-          <Link href="/projects" className="text-link">
-            View all projects
-          </Link>
         </Reveal>
 
         <Reveal as="section" className="content-section" id="experience">

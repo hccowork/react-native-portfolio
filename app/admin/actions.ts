@@ -189,6 +189,8 @@ export async function upsertProjectAction(
       image_url: imageUrl,
       live_url: getString(formData, "live_url"),
       github_url: getString(formData, "github_url"),
+      app_store_url: getString(formData, "app_store_url"),
+      play_store_url: getString(formData, "play_store_url"),
       platform: getString(formData, "platform"),
       featured: formData.get("featured") === "on",
       sort_order: getNumber(formData, "sort_order", 99),

@@ -227,6 +227,14 @@ export default async function AdminPage() {
                 <input name="github_url" />
               </label>
               <label>
+                Apple App Store URL
+                <input name="app_store_url" type="url" placeholder="https://apps.apple.com/..." />
+              </label>
+              <label>
+                Google Play Store URL
+                <input name="play_store_url" type="url" placeholder="https://play.google.com/store/apps/..." />
+              </label>
+              <label>
                 Image URL
                 <input name="image_url" />
               </label>
@@ -308,6 +316,14 @@ export default async function AdminPage() {
                     <label>
                       GitHub URL
                       <input name="github_url" defaultValue={project.github_url} />
+                    </label>
+                    <label>
+                      Apple App Store URL
+                      <input name="app_store_url" type="url" defaultValue={project.app_store_url} placeholder="https://apps.apple.com/..." />
+                    </label>
+                    <label>
+                      Google Play Store URL
+                      <input name="play_store_url" type="url" defaultValue={project.play_store_url} placeholder="https://play.google.com/store/apps/..." />
                     </label>
                     <label>
                       Image URL

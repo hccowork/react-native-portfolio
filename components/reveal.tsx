@@ -20,12 +20,20 @@ export function Reveal({
   ...props
 }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
+  const [isReady, setIsReady] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const node = ref.current;
 
     if (!node) {
+      return;
+    }
+
+    setIsReady(true);
+
+    if (!("IntersectionObserver" in window)) {
+      setIsVisible(true);
       return;
     }
 
@@ -52,7 +60,7 @@ export function Reveal({
   return (
     <Component
       ref={ref}
-      className={`reveal${isVisible ? " reveal-visible" : ""}${className ? ` ${className}` : ""}`}
+      className={`reveal${isReady ? " reveal-ready" : ""}${isVisible ? " reveal-visible" : ""}${className ? ` ${className}` : ""}`}
       style={{ "--reveal-delay": `${delay}ms` } as CSSProperties}
       {...props}
     >

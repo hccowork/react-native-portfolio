@@ -48,7 +48,10 @@ export const getPortfolioData = cache(async (): Promise<PortfolioData> => {
 
 export async function getFeaturedProjects() {
   const data = await getPortfolioData();
-  return data.projects.filter((project) => project.featured).slice(0, 3);
+  const featuredProjects = data.projects.filter((project) => project.featured);
+
+  // Keep the admin's featured selection, but never leave the homepage empty.
+  return (featuredProjects.length > 0 ? featuredProjects : data.projects).slice(0, 2);
 }
 
 export async function getSkillGroups() {

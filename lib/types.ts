@@ -23,6 +23,8 @@ export type Project = {
   image_url: string;
   live_url: string;
   github_url: string;
+  app_store_url: string;
+  play_store_url: string;
   platform: string;
   featured: boolean;
   sort_order: number;

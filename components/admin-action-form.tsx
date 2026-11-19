@@ -47,7 +47,6 @@ export function AdminActionForm({
     <form
       action={formAction}
       className={className}
-      encType="multipart/form-data"
     >
       <FormStatusToast
         state={visibleState}

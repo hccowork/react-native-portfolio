@@ -25,10 +25,16 @@ create table if not exists public.projects (
   image_url text default '',
   live_url text default '',
   github_url text default '',
+  app_store_url text default '',
+  play_store_url text default '',
   platform text default '',
   featured boolean default false,
   sort_order integer default 99
 );
+
+-- Safe to run on existing projects created before store-link support.
+alter table public.projects add column if not exists app_store_url text default '';
+alter table public.projects add column if not exists play_store_url text default '';
 
 create table if not exists public.experiences (
   id uuid primary key default gen_random_uuid(),
