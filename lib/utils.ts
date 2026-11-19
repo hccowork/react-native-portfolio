@@ -16,3 +16,29 @@ export function splitCsv(value: string) {
     .map((item) => item.trim())
     .filter(Boolean);
 }
+
+export function normalizeSocialLinkUrl(value: string) {
+  const url = value.trim();
+
+  if (!url) {
+    return "";
+  }
+
+  if (/^(https?:\/\/|mailto:|tel:)/i.test(url)) {
+    return url;
+  }
+
+  // Social URLs are commonly entered as "www.github.com/..." without a protocol.
+  if (/^[a-z0-9.-]+\.[a-z]{2,}(?:\/|$)/i.test(url)) {
+    return `https://${url}`;
+  }
+
+  return "";
+}
+
+export function normalizeWhatsAppNumber(value?: string | null) {
+  const digits = value?.replace(/\D/g, "") ?? "";
+
+  // WhatsApp numbers must include a country code and have up to 15 digits.
+  return /^\d{8,15}$/.test(digits) ? digits : "";
+}

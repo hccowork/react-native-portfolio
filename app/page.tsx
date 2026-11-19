@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ContactForm } from "@/components/contact-form";
+import { DirectContactCard } from "@/components/direct-contact-card";
 import { AnimatedNumber } from "@/components/animated-number";
 import { ArrowRightIcon } from "@/components/icons";
 import { ExperienceList } from "@/components/experience-list";
@@ -189,20 +190,7 @@ export default async function HomePage() {
             </h2>
           </div>
           <div className="contact-grid">
-            <article className="surface-card contact-card">
-              <h3>Direct contact</h3>
-              <a href={`mailto:${data.profile.email}`}>{data.profile.email}</a>
-              {data.socialLinks.map((link) => (
-                <a
-                  key={link.id}
-                  href={link.href}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </article>
+            <DirectContactCard profile={data.profile} socialLinks={data.socialLinks} />
             <article className="surface-card">
               <ContactForm />
             </article>

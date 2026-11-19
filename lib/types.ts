@@ -6,6 +6,7 @@ export type Profile = {
   long_bio: string;
   location: string;
   email: string;
+  whatsapp_number: string;
   resume_url: string;
   avatar_url: string;
   years_experience: number;

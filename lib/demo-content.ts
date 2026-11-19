@@ -17,6 +17,7 @@ export const demoProfile: Profile = {
     "I'm a React Native developer focused on fast, reliable mobile apps with clean UI systems, scalable state management, and strong collaboration with backend and product teams. This starter portfolio is designed for a developer who wants a modern public site and an easy editing workflow for projects, experience, and skills without touching code every time.",
   location: "India",
   email: "prem@example.com",
+  whatsapp_number: "",
   resume_url: "",
   avatar_url: "",
   years_experience: 3,

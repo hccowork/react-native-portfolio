@@ -8,12 +8,16 @@ create table if not exists public.profile (
   long_bio text not null,
   location text default '',
   email text default '',
+  whatsapp_number text default '',
   resume_url text default '',
   avatar_url text default '',
   years_experience integer default 0,
   projects_shipped integer default 0,
   companies_worked integer default 0
 );
+
+-- Safe to run on existing projects created before WhatsApp contact support.
+alter table public.profile add column if not exists whatsapp_number text default '';
 
 create table if not exists public.projects (
   id uuid primary key default gen_random_uuid(),
@@ -126,6 +130,7 @@ insert into public.profile (
   long_bio,
   location,
   email,
+  whatsapp_number,
   resume_url,
   avatar_url,
   years_experience,
@@ -140,6 +145,7 @@ values (
   'I''m a React Native developer focused on fast, reliable mobile apps with clean UI systems, scalable state management, and strong collaboration with backend and product teams.',
   'India',
   'prem@example.com',
+  '',
   '',
   '',
   3,

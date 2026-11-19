@@ -57,6 +57,24 @@ export function MailIcon({ className }: IconProps) {
   );
 }
 
+export function PhoneIcon({ className }: IconProps) {
+  return (
+    <IconWrapper className={className}>
+      <path d="M7.2 3.5 5.5 5.2c-.8.8-.9 2.1-.3 3.1 2.5 4.6 6.3 8.4 10.9 10.9 1 .6 2.3.5 3.1-.3l1.7-1.7c.5-.5.6-1.2.3-1.8l-1.7-3.4c-.3-.7-1.1-1-1.8-.8l-2.2.7a13.7 13.7 0 0 1-3.4-3.4l.7-2.2c.2-.7-.1-1.5-.8-1.8L9 3.2c-.6-.3-1.4-.2-1.8.3Z" />
+    </IconWrapper>
+  );
+}
+
+export function WhatsappIcon({ className }: IconProps) {
+  return (
+    <IconWrapper className={className}>
+      <path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.5L3.5 20.5l1.4-4.2A8.5 8.5 0 1 1 20.5 11.6Z" />
+      <path d="M9 8.3 7.8 9.5c.7 2.5 2.5 4.3 5 5l1.2-1.2" />
+      <path d="m13 13.3 1.8 1.2" />
+    </IconWrapper>
+  );
+}
+
 export function ShieldIcon({ className }: IconProps) {
   return (
     <IconWrapper className={className}>

@@ -9,7 +9,12 @@ import {
 } from "@/lib/supabase/server";
 import type { AdminActionState } from "@/lib/types";
 import { isValidResumeUrl } from "@/lib/resume";
-import { slugify, splitCsv } from "@/lib/utils";
+import {
+  normalizeSocialLinkUrl,
+  normalizeWhatsAppNumber,
+  slugify,
+  splitCsv,
+} from "@/lib/utils";
 
 const ASSET_BUCKET = "portfolio-assets";
 const RESUME_BUCKET = "portfolio-resumes";
@@ -126,6 +131,12 @@ export async function upsertProfileAction(
     const resumeUrl = hasNewResumeFile
       ? await uploadPublicFile(RESUME_BUCKET, "resumes", resumeFile)
       : manualResumeUrl;
+    const whatsappNumberInput = getString(formData, "whatsapp_number");
+    const whatsappNumber = normalizeWhatsAppNumber(whatsappNumberInput);
+
+    if (whatsappNumberInput && !whatsappNumber) {
+      return failure("Enter a valid WhatsApp number with country code, for example +91 98765 43210.");
+    }
 
     const payload = {
       id: getString(formData, "id") || "profile-1",
@@ -135,6 +146,7 @@ export async function upsertProfileAction(
       long_bio: getString(formData, "long_bio"),
       location: getString(formData, "location"),
       email: getString(formData, "email"),
+      whatsapp_number: whatsappNumber,
       resume_url: resumeUrl,
       avatar_url: avatarUrl,
       years_experience: getNumber(formData, "years_experience"),
@@ -358,10 +370,16 @@ export async function upsertSocialLinkAction(
     return failure("Supabase is not configured yet.");
   }
 
+  const href = normalizeSocialLinkUrl(getString(formData, "href"));
+
+  if (!href) {
+    return failure("Enter a valid https:// URL, mailto: address, or phone link.");
+  }
+
   const payload = {
     id: getString(formData, "id") || undefined,
     label: getString(formData, "label"),
-    href: getString(formData, "href"),
+    href,
     sort_order: getNumber(formData, "sort_order", 99),
   };
 

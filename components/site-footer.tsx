@@ -2,10 +2,13 @@ import type { Route } from "next";
 import type { ComponentType } from "react";
 import Link from "next/link";
 import { getPortfolioData } from "@/lib/data";
-import { ArrowRightIcon, GithubIcon, LinkIcon, LinkedinIcon, MailIcon } from "@/components/icons";
+import { normalizeSocialLinkUrl, normalizeWhatsAppNumber } from "@/lib/utils";
+import { ArrowRightIcon, GithubIcon, LinkIcon, LinkedinIcon, MailIcon, WhatsappIcon } from "@/components/icons";
 
 export async function SiteFooter() {
   const { profile, socialLinks } = await getPortfolioData();
+  const whatsappNumber = normalizeWhatsAppNumber(profile.whatsapp_number);
+  const whatsappMessage = encodeURIComponent("Hello, I'd like to connect with you regarding your projects.");
 
   const socialIconByLabel: Record<string, ComponentType<{ className?: string }>> = {
     github: GithubIcon,
@@ -38,11 +41,16 @@ export async function SiteFooter() {
         <div className="footer-socials">
           {socialLinks.map((link) => {
             const SocialIcon = socialIconByLabel[link.label.toLowerCase()] ?? LinkIcon;
+            const href = normalizeSocialLinkUrl(link.href);
+
+            if (!href) {
+              return null;
+            }
 
             return (
               <a
                 key={link.id}
-                href={link.href}
+                href={href}
                 target="_blank"
                 rel="noreferrer"
                 className="social-icon-link"
@@ -53,6 +61,18 @@ export async function SiteFooter() {
               </a>
             );
           })}
+          {whatsappNumber ? (
+            <a
+              href={`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`}
+              target="_blank"
+              rel="noreferrer"
+              className="social-icon-link social-icon-link-whatsapp"
+              aria-label="Chat on WhatsApp"
+              title="Chat on WhatsApp"
+            >
+              <WhatsappIcon className="social-icon" />
+            </a>
+          ) : null}
         </div>
       </div>
     </footer>

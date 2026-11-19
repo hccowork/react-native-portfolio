@@ -1,4 +1,5 @@
 import { ContactForm } from "@/components/contact-form";
+import { DirectContactCard } from "@/components/direct-contact-card";
 import { Reveal } from "@/components/reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -16,15 +17,7 @@ export default async function ContactPage() {
           <h1>Let’s build an excellent mobile experience together.</h1>
         </Reveal>
         <div className="contact-grid">
-          <article className="surface-card contact-card">
-            <h2>Reach out directly</h2>
-            <a href={`mailto:${profile.email}`}>{profile.email}</a>
-            {socialLinks.map((link) => (
-              <a key={link.id} href={link.href} target="_blank" rel="noreferrer">
-                {link.label}
-              </a>
-            ))}
-          </article>
+          <DirectContactCard profile={profile} socialLinks={socialLinks} />
           <article className="surface-card">
             <ContactForm />
           </article>

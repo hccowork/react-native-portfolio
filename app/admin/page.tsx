@@ -144,9 +144,15 @@ export default async function AdminPage() {
               <input name="location" defaultValue={data.profile.location} />
             </label>
             <label>
-              Email
+              Public contact email
               <input name="email" type="email" defaultValue={data.profile.email} />
             </label>
+            <p className="admin-form-hint">Shown as the primary email action in the public Direct Contact card.</p>
+            <label>
+              WhatsApp number
+              <input name="whatsapp_number" type="tel" inputMode="tel" placeholder="+91 98765 43210" defaultValue={data.profile.whatsapp_number} />
+            </label>
+            <p className="admin-form-hint">Include the country code. Visitors will see a WhatsApp action with a prefilled project enquiry message.</p>
             <label>
               Avatar URL
               <input name="avatar_url" defaultValue={data.profile.avatar_url} />
@@ -561,6 +567,7 @@ export default async function AdminPage() {
           <article className="admin-card">
             <p className="eyebrow">Social Links</p>
             <h2>Manage footer and contact links</h2>
+            <p className="admin-form-hint">These links appear as individual actions in the public Direct Contact card.</p>
             <AdminActionForm
               action={upsertSocialLinkAction}
               className="admin-form"
